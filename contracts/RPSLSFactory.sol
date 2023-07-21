@@ -7,7 +7,7 @@ import "./RPSLS.sol";
 contract RPSLSFactory {
     RPSLS[] private gameSessions;
     mapping (address => RPSLS[]) private userGameSessions;
-    function createFoundation(
+    function createGameSession(
         bytes32 _move1Hash,
         address _player2
     ) external payable {

@@ -37,8 +37,8 @@
       ]
     },
     "C:\\Users\\milaa\\Desktop\\Documents\\Работа Сонечка\\medium\\rpsls-game2\\contracts\\RPSLSFactory.sol": {
-      "lastModificationDate": 1689760352189,
-      "contentHash": "1795557ad1933191281558983ed23675",
+      "lastModificationDate": 1689927039064,
+      "contentHash": "de44106c742aee3f97491f8134db84ff",
       "sourceName": "contracts/RPSLSFactory.sol",
       "solcConfig": {
         "version": "0.8.12",

@@ -3,7 +3,6 @@ body * {
 }
 
 body {
-  height: 100vh;
   background-image: linear-gradient(0deg, #E5E5FE, white);
 }
 

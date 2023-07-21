@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-function WelcomePage () {
-    return <></>;
-};
+function WelcomePage() {
+  return <></>;
+}
 
 export default WelcomePage;
