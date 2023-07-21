@@ -1,8 +1,6 @@
 import {
   Button,
-  Card,
   Chip,
-  Divider as MuiDivider,
   TextField as MuiTextField,
   styled,
 } from "@mui/material";
@@ -39,9 +37,7 @@ export const MoveItem = styled("li")`
   }
 `;
 
-export const Divider = styled(MuiDivider)``;
-
-export const TransactionContainer = styled(Card)``;
+export const TransactionHistoryContainer = styled("div")``;
 
 export const TextField = styled(MuiTextField)`
   width: 100%;

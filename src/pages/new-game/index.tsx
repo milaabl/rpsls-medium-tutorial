@@ -10,8 +10,9 @@ import { useLocalStorage } from "react-use";
 import * as S from "./styles";
 import { moves, moveIcons, Move } from "moves";
 import { contracts } from "contracts";
-import { encodePacked, keccak256, parseEther } from "viem";
+import { TransactionReceipt, encodePacked, keccak256, parseEther } from "viem";
 import { AppContext } from "context/AppContext";
+import TransactionHistory from "components/TransactionHistory/TransactionHistory";
 
 function NewGamePage() {
   const { address } = useAccount();
@@ -24,15 +25,11 @@ function NewGamePage() {
 
   const [selectedMove, setSelectedMove] = useState<Move>(Move.Null);
 
-  const { config } = usePrepareContractWrite({
+  const { data : createNewGameSessionData, write: createNewGameSession } = useContractWrite({
     ...contracts.factory,
     functionName: "createGameSession",
     args: [move1Hash, player2],
-    value: parseEther(bid),
-  });
-
-  const { data : createNewGameSessionData, write: createNewGameSession } = useContractWrite({
-    ...config
+    value: parseEther(bid)
   });
 
   const { isLoading, data : newGameTxData, error } = useWaitForTransaction({
@@ -41,7 +38,11 @@ function NewGamePage() {
 
   const { setErrorMessage, setIsLoading } = useContext(AppContext);
 
-  const [_newGameTxData, _setNewGameTxData] = useLocalStorage('gameTxData');
+  const [_newGameTxData, _setNewGameTxData] = useLocalStorage('gameTxData', newGameTxData, {
+    raw: false,
+    serializer: (value : TransactionReceipt) => JSON.stringify(value),
+    deserializer: (value : string) => JSON.parse(value)
+  });
 
   useEffect(() => {
     error?.message && setErrorMessage?.(error.message);
@@ -52,7 +53,7 @@ function NewGamePage() {
   }, [isLoading]);
 
   useEffect(() => {
-    _setNewGameTxData(JSON.stringify(newGameTxData));
+    _setNewGameTxData(newGameTxData);
   }, [newGameTxData]);
 
   return (
@@ -121,15 +122,14 @@ function NewGamePage() {
 
           setMove1Hash(_move1Hash);
 
+          console.log(createNewGameSession)
+
           createNewGameSession?.();
         }}
       >
         Submit session ✅
       </S.SubmitButton>
-      <S.Divider />
-      <S.TransactionContainer>
-        {JSON.parse(_newGameTxData as string).status}
-      </S.TransactionContainer>
+      { newGameTxData || _newGameTxData ? <TransactionHistory transactionData={newGameTxData || _newGameTxData} /> : <></>}
     </S.Container>
   );
 }
