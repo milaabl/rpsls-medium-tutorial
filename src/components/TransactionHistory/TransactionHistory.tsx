@@ -5,6 +5,7 @@ import { Hash, decodeAbiParameters } from "viem";
 import { useTheme } from "@mui/material";
 import successTickIcon from "assets/icons/success-tick.svg";
 import { AppContext } from "context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 interface TransactionHistoryProps {
   transactionHash: Hash;
@@ -24,6 +25,9 @@ function TransactionHistory({ transactionHash : _transactionHash }: TransactionH
   } = useWaitForTransaction({
     hash: transactionHash,
     enabled: !!(transactionHash),
+    onSuccess: (data) => {
+      console.log(data)
+    },
     onReplaced: (replacement) => {
       console.log({ replacement });
       if (replacement.reason === 'cancelled') {
@@ -34,11 +38,17 @@ function TransactionHistory({ transactionHash : _transactionHash }: TransactionH
       }
     },
     onError: (err) => console.log({ err }),
+    confirmations: 1
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading?.(isTransactionDataLoading);
   }, [isTransactionDataLoading]);
+
+  useEffect(() => {
+  }, [transactionData]);
 
   return isTransactionDataLoading ? (
     <>
@@ -62,7 +72,7 @@ function TransactionHistory({ transactionHash : _transactionHash }: TransactionH
     <>
       <S.Container>
         <S.Details>
-          <S.SuccessIndicator height={theme.spacing(8)} src={successTickIcon} alt='Success' />
+          <S.SuccessIndicator height={theme.spacing(4)} src={successTickIcon} alt='Success' />
           <S.Heading>Transaction details</S.Heading>
           <S.DetailsItem>
             <strong>Transaction address: </strong>
@@ -77,22 +87,6 @@ function TransactionHistory({ transactionHash : _transactionHash }: TransactionH
             {String(transactionData.effectiveGasPrice)} WEI
           </S.DetailsItem>
           <S.DetailsItem>
-            <strong>Tokens transferred: </strong>
-            {transactionData.logs[0]?.data &&
-              String(
-                decodeAbiParameters(
-                  [
-                    {
-                      type: 'uint256',
-                      name: 'amount',
-                    },
-                  ],
-                  transactionData.logs[0]?.data,
-                ),
-              )}{' '}
-            $PENG
-          </S.DetailsItem>
-          <S.DetailsItem>
             <strong>Recipient: </strong>
             {transactionData.logs[0]?.data &&
               String(
@@ -100,7 +94,7 @@ function TransactionHistory({ transactionHash : _transactionHash }: TransactionH
                   [
                     {
                       type: 'address',
-                      name: 'to',
+                      name: 'player2',
                     },
                   ],
                   transactionData.logs[0].topics[2] as Address,
@@ -115,6 +109,12 @@ function TransactionHistory({ transactionHash : _transactionHash }: TransactionH
         </S.Details>
         <S.CutOffBorder />
       </S.Container>
+      <S.GameButtonsContainer>
+        <S.InviteOpponentButton onClick={() => {
+        navigator.clipboard.writeText(`${window.location.hostname}/game-session/${transactionHash}`);
+      }}>Copy opponent's invitation link</S.InviteOpponentButton>
+      <S.GoToSolveGameButton onClick={() => navigate(`/game-session/${transactionHash}`)}>Go to game session</S.GoToSolveGameButton>
+      </S.GameButtonsContainer>
     </>
   ) : (
     <></>

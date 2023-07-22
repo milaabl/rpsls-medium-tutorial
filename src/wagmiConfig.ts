@@ -1,19 +1,21 @@
 import { configureChains, createConfig } from 'wagmi'
 import { sepolia } from 'wagmi/chains'
-import { publicProvider } from 'wagmi/providers/public'
-import { InjectedConnector } from 'wagmi/connectors/injected'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
  
-const { chains, publicClient } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [sepolia],
-  [publicProvider()]
+  [alchemyProvider({
+    apiKey: "t8xyaDtb1Xg-Rub8BOA-us_SGyt2pBd4"
+  })]
 )
 
-const connector = new InjectedConnector({
+const connector = new MetaMaskConnector({
   chains,
 })
 
 export const wagmiConfig = createConfig({
   publicClient,
-  connectors: [connector],
-  autoConnect: true,
+  webSocketPublicClient,
+  connectors: [connector]
 });

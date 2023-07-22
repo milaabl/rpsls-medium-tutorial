@@ -32,22 +32,14 @@ function NewGamePage() {
 
   const [selectedMove, setSelectedMove] = useState<Move>(Move.Null);
 
-  const [move1Hash, setMove1Hash] = useState<string | undefined>();
-
   const [isMoveCommitted, setIsMoveCommitted] = useState<boolean>(false);
 
-  const { error, isLoading : isNewGameSessionLoading, write : createNewGameSession, data: createNewGameSessionData } = useContractWrite({
+
+    const { error, isLoading : isNewGameSessionLoading, write : createNewGameSession, data: createNewGameSessionData } = useContractWrite({
       ...contracts.factory,
       functionName: "createGameSession",
       value: parseEther(bid),
-      args: [move1Hash, player2]
     });
-
-    useEffect(() => {
-      if (!!(move1Hash && Number(bid) > 0 && validateAddress(player2))) {
-        createNewGameSession?.();
-      }
-    }, [bid, move1Hash, player2])
 
     useEffect(() => {
       if (createNewGameSessionData?.hash && !error) {
@@ -65,9 +57,7 @@ function NewGamePage() {
     setIsLoading?.(isNewGameSessionLoading);
   }, [isNewGameSessionLoading]);
 
-  return (
-    <S.Container>
-      { !isMoveCommitted ? <>
+  return (!isMoveCommitted ? <S.Container>
       <S.MovesContainer>
         {moves.map((move: Move) => (
           <S.MoveItem
@@ -116,31 +106,29 @@ function NewGamePage() {
         </S.Input>
       </S.Form>
       <S.SubmitButton
-        disabled={!!(move1Hash && Number(bid) > 0 && validateAddress(player2))}
+        disabled={!(address && selectedMove !== Move.Null && Number(bid) > 0 && validateAddress(player2))}
         onClick={() => {
           const array = new Uint8Array(32);
           const salt = crypto
             .getRandomValues(array)
             .reduce((prev, curr) => prev + curr, 0);
-          setSalt(String(salt));
 
           const _move1Hash = keccak256(
             encodePacked(["uint8", "uint256"], [selectedMove, BigInt(salt)]),
           );
 
-          setMove1Hash(_move1Hash);
+          setSalt(String(salt));
+
+          createNewGameSession({
+            args: [_move1Hash, player2]
+          });
         }}
       >
         Submit session ✅
       </S.SubmitButton>
-      </> : <></>}
-      {createNewGameSessionData?.hash ? (
+      </S.Container> : createNewGameSessionData?.hash ? (
         <TransactionHistory transactionHash={createNewGameSessionData?.hash} />
-      ) : (
-        <></>
-      )}
-    </S.Container>
-  );
+      ) : <></>);
 }
 
 export default NewGamePage;

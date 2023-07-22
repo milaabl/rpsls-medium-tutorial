@@ -23,7 +23,8 @@ function WelcomePage() {
     setIsLoading?.(isLoading);
   }, [isLoading]);
 
-  return availableGameSessions ? <S.Container>{
+
+  return availableGameSessions && (availableGameSessions as Array<Hash>)?.length >= 1 ? <S.Container>{
     (availableGameSessions as Array<Hash>).map((hash : Hash) => <S.LinkToSession onClick={() => navigate(`/game-session/${hash}`)}>
       {hash}
       </S.LinkToSession>)}
