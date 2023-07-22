@@ -113,9 +113,61 @@ export const contracts = {
           },
           {
             inputs: [],
+            name: "TIMEOUT_IN_MS",
+            outputs: [
+              {
+                internalType: "uint256",
+                name: "",
+                type: "uint256"
+              }
+            ],
+            stateMutability: "view",
+            type: "function"
+          },
+          {
+            inputs: [],
             name: "claimTimeout",
             outputs: [],
             stateMutability: "nonpayable",
+            type: "function"
+          },
+          {
+            inputs: [],
+            name: "lastTimePlayed",
+            outputs: [
+              {
+                internalType: "uint256",
+                name: "",
+                type: "uint256"
+              }
+            ],
+            stateMutability: "view",
+            type: "function"
+          },
+          {
+            inputs: [],
+            name: "move1",
+            outputs: [
+              {
+                internalType: "enum RPSLS.Move",
+                name: "",
+                type: "uint8"
+              }
+            ],
+            stateMutability: "view",
+            type: "function"
+          },
+          {
+            inputs: [],
+            name: "move2",
+            outputs: [
+              {
+                internalType: "enum RPSLS.Move",
+                name: "",
+                type: "uint8"
+              }
+            ],
+            stateMutability: "view",
             type: "function"
           },
           {
@@ -129,6 +181,32 @@ export const contracts = {
             name: "play",
             outputs: [],
             stateMutability: "payable",
+            type: "function"
+          },
+          {
+            inputs: [],
+            name: "player1",
+            outputs: [
+              {
+                internalType: "address",
+                name: "",
+                type: "address"
+              }
+            ],
+            stateMutability: "view",
+            type: "function"
+          },
+          {
+            inputs: [],
+            name: "player2",
+            outputs: [
+              {
+                internalType: "address",
+                name: "",
+                type: "address"
+              }
+            ],
+            stateMutability: "view",
             type: "function"
           },
           {
@@ -147,6 +225,19 @@ export const contracts = {
             name: "solve",
             outputs: [],
             stateMutability: "nonpayable",
+            type: "function"
+          },
+          {
+            inputs: [],
+            name: "stake",
+            outputs: [
+              {
+                internalType: "uint256",
+                name: "",
+                type: "uint256"
+              }
+            ],
+            stateMutability: "view",
             type: "function"
           }
         ]

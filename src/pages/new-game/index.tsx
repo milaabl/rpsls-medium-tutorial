@@ -1,10 +1,17 @@
-import React, { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
+import React, {
+  ChangeEvent,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
   useContractEvent,
   useAccount,
+  useTransaction,
 } from "wagmi";
 import { useLocalStorage } from "react-use";
 import * as S from "./styles";
@@ -13,6 +20,7 @@ import { contracts } from "contracts";
 import { TransactionReceipt, encodePacked, keccak256, parseEther } from "viem";
 import { AppContext } from "context/AppContext";
 import TransactionHistory from "components/TransactionHistory/TransactionHistory";
+import { validateAddress } from "utils/validators";
 
 function NewGamePage() {
   const { address } = useAccount();
@@ -20,44 +28,46 @@ function NewGamePage() {
   const [player2, setPlayer2] = useState<string | undefined>();
   const [bid, setBid] = useState<string>("0");
 
-  const [move1Hash, setMove1Hash] = useState<string | undefined>(undefined);
   const [, setSalt] = useLocalStorage("salt");
 
   const [selectedMove, setSelectedMove] = useState<Move>(Move.Null);
 
-  const { data : createNewGameSessionData, write: createNewGameSession } = useContractWrite({
-    ...contracts.factory,
-    functionName: "createGameSession",
-    args: [move1Hash, player2],
-    value: parseEther(bid)
-  });
+  const [move1Hash, setMove1Hash] = useState<string | undefined>();
 
-  const { isLoading, data : newGameTxData, error } = useWaitForTransaction({
-    hash: createNewGameSessionData?.hash
-  });
+  const [isMoveCommitted, setIsMoveCommitted] = useState<boolean>(false);
+
+  const { error, isLoading : isNewGameSessionLoading, write : createNewGameSession, data: createNewGameSessionData } = useContractWrite({
+      ...contracts.factory,
+      functionName: "createGameSession",
+      value: parseEther(bid),
+      args: [move1Hash, player2]
+    });
+
+    useEffect(() => {
+      if (!!(move1Hash && Number(bid) > 0 && validateAddress(player2))) {
+        createNewGameSession?.();
+      }
+    }, [bid, move1Hash, player2])
+
+    useEffect(() => {
+      if (createNewGameSessionData?.hash && !error) {
+        setIsMoveCommitted(true);
+      }
+    }, [createNewGameSessionData?.hash]);
 
   const { setErrorMessage, setIsLoading } = useContext(AppContext);
-
-  const [_newGameTxData, _setNewGameTxData] = useLocalStorage('gameTxData', newGameTxData, {
-    raw: false,
-    serializer: (value : TransactionReceipt) => JSON.stringify(value),
-    deserializer: (value : string) => JSON.parse(value)
-  });
 
   useEffect(() => {
     error?.message && setErrorMessage?.(error.message);
   }, [error?.message]);
 
   useEffect(() => {
-    setIsLoading?.(isLoading);
-  }, [isLoading]);
-
-  useEffect(() => {
-    _setNewGameTxData(newGameTxData);
-  }, [newGameTxData]);
+    setIsLoading?.(isNewGameSessionLoading);
+  }, [isNewGameSessionLoading]);
 
   return (
     <S.Container>
+      { !isMoveCommitted ? <>
       <S.MovesContainer>
         {moves.map((move: Move) => (
           <S.MoveItem
@@ -106,9 +116,7 @@ function NewGamePage() {
         </S.Input>
       </S.Form>
       <S.SubmitButton
-        disabled={
-          !(address && selectedMove !== Move.Null && player2 && Number(bid) > 0)
-        }
+        disabled={!!(move1Hash && Number(bid) > 0 && validateAddress(player2))}
         onClick={() => {
           const array = new Uint8Array(32);
           const salt = crypto
@@ -121,15 +129,16 @@ function NewGamePage() {
           );
 
           setMove1Hash(_move1Hash);
-
-          console.log(createNewGameSession)
-
-          createNewGameSession?.();
         }}
       >
         Submit session ✅
       </S.SubmitButton>
-      { newGameTxData || _newGameTxData ? <TransactionHistory transactionData={newGameTxData || _newGameTxData} /> : <></>}
+      </> : <></>}
+      {createNewGameSessionData?.hash ? (
+        <TransactionHistory transactionHash={createNewGameSessionData?.hash} />
+      ) : (
+        <></>
+      )}
     </S.Container>
   );
 }

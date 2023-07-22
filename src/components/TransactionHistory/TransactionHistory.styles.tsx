@@ -1,11 +1,11 @@
-import { styled } from "@mui/material";
+import { CircularProgress, styled } from "@mui/material";
 
 export const Container = styled("div")`
   width: 100%;
   padding: ${({ theme }) => theme.spacing(0, 4)};
   margin-bottom: ${({ theme }) => theme.spacing(5)};
   ${({ theme }) =>
-  `${theme.breakpoints.up("md")} {
+    `${theme.breakpoints.up("md")} {
         width: 75%;
         margin-right: auto;
         margin-left: auto;
@@ -14,15 +14,18 @@ export const Container = styled("div")`
     `}
 `;
 
+export const LoadingIconComponent = styled(CircularProgress)``;
+
 export const Details = styled("div")`
-  border-radius: ${({ theme }) => theme.spacing(2)} ${({ theme }) => theme.spacing(2)} 0 0;
+  border-radius: ${({ theme }) => theme.spacing(2)}
+    ${({ theme }) => theme.spacing(2)} 0 0;
   background-color: ${({ theme }) => theme.palette.common.white};
   display: flex;
   padding: ${({ theme }) => theme.spacing(4)};
   position: relative;
   flex-direction: column;
   ${({ theme }) =>
-  `${theme.breakpoints.up("md")} {
+    `${theme.breakpoints.up("md")} {
         padding: ${theme.spacing(10)};
   }
     `}
@@ -46,7 +49,7 @@ export const Heading = styled("h2")`
   margin-bottom: ${({ theme }) => theme.spacing(4)};
   position: relative;
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     width: calc(100% + ${({ theme }) => theme.spacing(8)});
@@ -55,7 +58,7 @@ export const Heading = styled("h2")`
     right: 0;
     left: -${({ theme }) => theme.spacing(4)};
     ${({ theme }) =>
-    `${theme.breakpoints.up("md")} {
+      `${theme.breakpoints.up("md")} {
             left: -${theme.spacing(10)};
             width: calc(100% + ${theme.spacing(20)});
     }`}
@@ -71,8 +74,13 @@ export const Heading = styled("h2")`
 `;
 
 export const CutOffBorder = styled("div")`
-  --mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 90deg, #0000 91deg) 50% /
-    ${({ theme }) => theme.spacing(5)} 100%;
+  --mask: conic-gradient(
+      from -45deg at bottom,
+      #0000,
+      #000 1deg 90deg,
+      #0000 91deg
+    )
+    50% / ${({ theme }) => theme.spacing(5)} 100%;
   -webkit-mask: var(--mask);
   mask: var(--mask);
   background-color: ${({ theme }) => theme.palette.common.white};
@@ -97,7 +105,7 @@ export const SuccessIndicator = styled("img")`
   position: absolute;
   top: 0px;
   transform: translateY(-50%);
-  background-color: #90EE90;
+  background-color: #90ee90;
   left: 0;
   right: 0;
 `;
