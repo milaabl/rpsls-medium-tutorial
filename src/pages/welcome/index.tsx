@@ -26,7 +26,8 @@ function WelcomePage() {
 
   return availableGameSessions && (availableGameSessions as Array<Hash>)?.length >= 1 ? <S.Container>{
     (availableGameSessions as Array<Hash>).map((hash : Hash) => <S.LinkToSession onClick={() => navigate(`/game-session/${hash}`)}>
-      {hash}
+      <span>{hash}</span>
+      <S.ArrowRightButton />
       </S.LinkToSession>)}
     </S.Container> : <S.NoAvailableGameSessions>
       <S.NoAvailableGameSessionsLabel>

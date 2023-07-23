@@ -2,24 +2,22 @@
 
 pragma solidity ^0.8.12;
 
-
-
 contract RPSLS {
     enum Move {
         Null, Rock, Paper, Scissors, Lizard, Spock
     }
-    address player1;
-    address player2;
+    address public player1;
+    address public player2;
 
     bytes32 move1Hash;
 
-    Move move1;
-    Move move2;
+    Move public move1;
+    Move public move2;
 
-    uint256 stake;
+    uint256 public stake;
 
-    uint256 TIMEOUT_IN_MS = 5 minutes;
-    uint256 lastTimePlayed;
+    uint256 public TIMEOUT_IN_MS = 5 minutes;
+    uint256 public lastTimePlayed;
 
     modifier onlyOwner() {
         require(msg.sender == player1);
@@ -32,7 +30,6 @@ contract RPSLS {
     event GameTimedOut(address indexed fallbackWinner);
 
     constructor(bytes32 _move1Hash, address _player1, address _player2) payable {
-        require(msg.sender == 0x0220AE53c8979e3b20c63bA996A69756e83D9A7C, "You're not the factory contract.");
         stake = msg.value;
         move1Hash = _move1Hash;
         player1 = _player1;
@@ -109,6 +106,7 @@ contract RPSLS {
         require(block.timestamp > lastTimePlayed + TIMEOUT_IN_MS, "Time has not run out yet.");
 
         uint256 _stake = stake;
+        stake = 0;
 
         if (player2 == address(0)) {
             (bool _success) = payable(player1).send(_stake);
@@ -120,7 +118,7 @@ contract RPSLS {
             }
         }
         else if (move2 != Move.Null) {
-         (bool _success) = payable(player2).send(_stake);
+         (bool _success) = payable(player2).send(_stake * 2);
             if (!_success) {
                 stake = _stake;
             }

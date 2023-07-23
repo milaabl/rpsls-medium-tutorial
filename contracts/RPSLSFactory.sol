@@ -10,7 +10,7 @@ contract RPSLSFactory {
     function createGameSession(
         bytes32 _move1Hash,
         address _player2
-    ) external payable {
+    ) external payable returns (RPSLS) {
         RPSLS gameSession = (new RPSLS){value: msg.value}(
             _move1Hash,
             msg.sender,
@@ -19,6 +19,8 @@ contract RPSLSFactory {
         gameSessions.push(gameSession);
         userGameSessions[msg.sender].push(gameSession);
         userGameSessions[_player2].push(gameSession);
+
+        return gameSession;
     }
     function getGameSessions()
         external

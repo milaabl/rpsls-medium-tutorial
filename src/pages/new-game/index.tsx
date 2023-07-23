@@ -29,6 +29,7 @@ function NewGamePage() {
   const [bid, setBid] = useState<string>("0");
 
   const [, setSalt] = useLocalStorage("salt");
+  const [, setMove1] = useLocalStorage("move1");
 
   const [selectedMove, setSelectedMove] = useState<Move>(Move.Null);
 
@@ -118,6 +119,7 @@ function NewGamePage() {
           );
 
           setSalt(String(salt));
+          setMove1(selectedMove);
 
           createNewGameSession({
             args: [_move1Hash, player2]

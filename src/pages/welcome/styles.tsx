@@ -1,4 +1,5 @@
 import { styled } from "@mui/material";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 export const Container = styled("div")`
     display: flex;
@@ -13,9 +14,11 @@ export const LinkToSession = styled("button")`
     border: 1px solid ${({theme}) => theme.palette.lavender?.main};
     background-color: ${({theme}) => theme.palette.common.white};
     cursor: pointer;
-    &:hover {
-        background-color: ${({theme}) => theme.palette.lavender?.main};
-    }
+    justify-content: space-between;
+`;
+
+export const ArrowRightButton = styled(ArrowForwardIcon)`
+    cursor: pointer;
 `;
 
 
@@ -25,7 +28,7 @@ export const NoAvailableGameSessions = styled("div")`
     display: flex;
     flex-direction: column;
     gap: ${({theme}) => theme.spacing(2)};
-    margin: ${({theme}) => theme.spacing(10)};
+    margin: ${({theme}) => theme.spacing(5)} auto;
 `;
 
 export const NoAvailableGameSessionsLabel = styled("h1")`
