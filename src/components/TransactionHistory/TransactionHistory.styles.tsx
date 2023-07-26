@@ -4,7 +4,7 @@ export const Container = styled("div")`
   width: 100%;
   padding: ${({ theme }) => theme.spacing(0, 2)};
   margin-bottom: ${({ theme }) => theme.spacing(2.5)};
-  margin-top: ${({theme}) => theme.spacing(3)};
+  margin-top: ${({ theme }) => theme.spacing(3)};
   ${({ theme }) =>
     `${theme.breakpoints.up("md")} {
         margin-top: ${theme.spacing(6)};
@@ -117,35 +117,35 @@ export const SuccessIndicator = styled("img")`
 `;
 
 export const GameButtonsContainer = styled("div")`
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    ${({theme}) => theme.breakpoints.up("md")} {
-      flex-direction: row;
-      justify-content: space-between;
-      gap: ${({theme}) => theme.spacing(2)};
-      max-width: 75%;
-    }
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  ${({ theme }) => theme.breakpoints.up("md")} {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: ${({ theme }) => theme.spacing(2)};
+    max-width: 75%;
+  }
 `;
 
 export const InviteOpponentButton = styled("button")`
-    width: 100%;
-    border-radius: ${({theme}) => theme.spacing(1)};
-    background-color: ${({theme}) => theme.palette.common.white};
-    max-width: 420px;
-    padding: ${({theme}) => theme.spacing(1, 2)};
-    cursor: pointer;
-    font-size: ${({theme}) => theme.typography.button.fontSize};
-    font-weight: 600;
+  width: 100%;
+  border-radius: ${({ theme }) => theme.spacing(1)};
+  background-color: ${({ theme }) => theme.palette.common.white};
+  max-width: 420px;
+  padding: ${({ theme }) => theme.spacing(1, 2)};
+  cursor: pointer;
+  font-size: ${({ theme }) => theme.typography.button.fontSize};
+  font-weight: 600;
 `;
 
 export const GoToSolveGameButton = styled("button")`
-    border-radius: ${({theme}) => theme.spacing(1)};
-    width: 100%;
-    background-color: ${({theme}) => theme.palette.common.white};
-    max-width: 420px;
-    padding: ${({theme}) => theme.spacing(1, 2)};
-    cursor: pointer;
-    font-size: ${({theme}) => theme.typography.button.fontSize};
-    font-weight: 600;
+  border-radius: ${({ theme }) => theme.spacing(1)};
+  width: 100%;
+  background-color: ${({ theme }) => theme.palette.common.white};
+  max-width: 420px;
+  padding: ${({ theme }) => theme.spacing(1, 2)};
+  cursor: pointer;
+  font-size: ${({ theme }) => theme.typography.button.fontSize};
+  font-weight: 600;
 `;

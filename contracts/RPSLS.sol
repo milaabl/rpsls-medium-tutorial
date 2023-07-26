@@ -2,6 +2,35 @@
 
 pragma solidity ^0.8.12;
 
+contract RPSLSFactory {
+    RPSLS[] private gameSessions;
+    mapping (address => RPSLS[]) private userGameSessions;
+
+    event NewGameSession(address indexed gameSession);
+    function createGameSession(
+        bytes32 _move1Hash,
+        address _player2
+    ) external payable {
+        RPSLS gameSession = (new RPSLS){value: msg.value}(
+            _move1Hash,
+            msg.sender,
+            _player2
+        );
+        gameSessions.push(gameSession);
+        userGameSessions[msg.sender].push(gameSession);
+        userGameSessions[_player2].push(gameSession);
+
+        emit NewGameSession(address(gameSession));
+    }
+    function getGameSessions()
+        external
+        view
+        returns (RPSLS[] memory _gameSessions)
+    {
+        return userGameSessions[msg.sender];
+    }
+}
+
 contract RPSLS {
     enum Move {
         Null, Rock, Paper, Scissors, Lizard, Spock
@@ -44,9 +73,11 @@ contract RPSLS {
 
         move2 = _move2;
         lastTimePlayed = block.timestamp;
+
+        emit Player2Played(player2, _move2);
     }
 
-    function solve(Move _move1, uint256 _salt) onlyOwner external {
+    function solve(Move _move1, string calldata _salt) onlyOwner external {
         require(player2 != address(0), "Player 2 should make his move in order to solve the round.");
         require(move2 != Move.Null, "Player 2 should move first.");
         require(keccak256(abi.encodePacked(_move1, _salt)) == move1Hash, "The exposed value is not the hashed one!");
@@ -89,7 +120,7 @@ contract RPSLS {
         }
     }
 
-    function win(Move _move1, Move _move2) internal pure returns (bool) {
+    function win(Move _move1, Move _move2) public pure returns (bool) {
         if (_move1 == _move2)
             return false; // They played the same so no winner.
         else if (_move1 == Move.Null)

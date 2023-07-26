@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { Dispatch, useContext, useEffect, useState } from "react";
 import * as S from "./TransactionHistory.styles";
 import { Address, useWaitForTransaction } from "wagmi";
 import { Hash, decodeAbiParameters } from "viem";
@@ -9,12 +9,17 @@ import { useNavigate } from "react-router-dom";
 
 interface TransactionHistoryProps {
   transactionHash: Hash;
+  setGameSessionHash: Dispatch<Hash>;
 }
 
-function TransactionHistory({ transactionHash : _transactionHash }: TransactionHistoryProps) {
+function TransactionHistory({
+  setGameSessionHash: _setGameSessionHash,
+  transactionHash: _transactionHash,
+}: TransactionHistoryProps) {
   const theme = useTheme();
 
-  const [transactionHash, setTransactionHash] = useState<Hash>(_transactionHash);
+  const [transactionHash, setTransactionHash] =
+    useState<Hash>(_transactionHash);
 
   const { setIsLoading, setErrorMessage } = useContext(AppContext);
 
@@ -24,31 +29,50 @@ function TransactionHistory({ transactionHash : _transactionHash }: TransactionH
     isLoading: isTransactionDataLoading,
   } = useWaitForTransaction({
     hash: transactionHash,
-    enabled: !!(transactionHash),
+    enabled: !!transactionHash,
     onSuccess: (data) => {
-      console.log(data)
+      console.log(data);
     },
     onReplaced: (replacement) => {
       console.log({ replacement });
-      if (replacement.reason === 'cancelled') {
+      if (replacement.reason === "cancelled") {
         setErrorMessage?.(`Transaction ${transactionHash} was cancelled`);
         return;
       } else {
         setTransactionHash(replacement.transactionReceipt.transactionHash);
       }
     },
-    onError: (err) => console.log({ err }),
-    confirmations: 1
+    onError: (err) => setErrorMessage?.(err.message),
+    confirmations: 1,
   });
+
+  const [gameSessionHash, setGameSessionHash] = useState<Hash>();
+
+  useEffect(() => {
+    if (!transactionData?.logs[0]?.data) return;
+
+    const _gameSessionHash = String(
+      decodeAbiParameters(
+        [
+          {
+            type: "address",
+            name: "gameSession",
+          },
+        ],
+        transactionData.logs[0].topics[1] as Address,
+      ),
+    ) as Hash;
+
+    setGameSessionHash(_gameSessionHash);
+
+    _setGameSessionHash(_gameSessionHash);
+  }, [transactionData]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading?.(isTransactionDataLoading);
   }, [isTransactionDataLoading]);
-
-  useEffect(() => {
-  }, [transactionData]);
 
   return isTransactionDataLoading ? (
     <>
@@ -68,11 +92,15 @@ function TransactionHistory({ transactionHash : _transactionHash }: TransactionH
         <S.CutOffBorder />
       </S.Container>
     </>
-  ) : transactionData?.status === 'success' && !error ? (
+  ) : transactionData?.status === "success" && !error ? (
     <>
       <S.Container>
         <S.Details>
-          <S.SuccessIndicator height={theme.spacing(4)} src={successTickIcon} alt='Success' />
+          <S.SuccessIndicator
+            height={theme.spacing(4)}
+            src={successTickIcon}
+            alt="Success"
+          />
           <S.Heading>Transaction details</S.Heading>
           <S.DetailsItem>
             <strong>Transaction address: </strong>
@@ -86,21 +114,14 @@ function TransactionHistory({ transactionHash : _transactionHash }: TransactionH
             <strong>Gas price: </strong>
             {String(transactionData.effectiveGasPrice)} WEI
           </S.DetailsItem>
-          <S.DetailsItem>
-            <strong>Recipient: </strong>
-            {transactionData.logs[0]?.data &&
-              String(
-                decodeAbiParameters(
-                  [
-                    {
-                      type: 'address',
-                      name: 'player2',
-                    },
-                  ],
-                  transactionData.logs[0].topics[2] as Address,
-                ),
-              )}
-          </S.DetailsItem>
+          {gameSessionHash ? (
+            <S.DetailsItem>
+              <strong>Game session hash: </strong>
+              {gameSessionHash}
+            </S.DetailsItem>
+          ) : (
+            <></>
+          )}
           <S.DetailsItem>
             <strong>Status: </strong>
             {transactionData.status.charAt(0).toUpperCase()}
@@ -109,12 +130,26 @@ function TransactionHistory({ transactionHash : _transactionHash }: TransactionH
         </S.Details>
         <S.CutOffBorder />
       </S.Container>
-      <S.GameButtonsContainer>
-        <S.InviteOpponentButton onClick={() => {
-        navigator.clipboard.writeText(`${window.location.hostname}/game-session/${transactionHash}`);
-      }}>Copy opponent's invitation link</S.InviteOpponentButton>
-      <S.GoToSolveGameButton onClick={() => navigate(`/game-session/${transactionHash}`)}>Go to game session</S.GoToSolveGameButton>
-      </S.GameButtonsContainer>
+      {gameSessionHash ? (
+        <S.GameButtonsContainer>
+          <S.InviteOpponentButton
+            onClick={() => {
+              navigator.clipboard.writeText(
+                `${window.location.hostname}/game-session/${gameSessionHash}`,
+              );
+            }}
+          >
+            Copy opponent's invitation link
+          </S.InviteOpponentButton>
+          <S.GoToSolveGameButton
+            onClick={() => navigate(`/game-session/${gameSessionHash}`)}
+          >
+            Go to game session
+          </S.GoToSolveGameButton>
+        </S.GameButtonsContainer>
+      ) : (
+        <></>
+      )}
     </>
   ) : (
     <></>

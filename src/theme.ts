@@ -29,7 +29,7 @@ export const theme = createTheme({
         yellow: {
           lightest: '#FFFAE3',
           light: '#FCEABE',
-          main: '#F4C64F',
+          main: '#ffd500',
         },
         orange: {
           light: '#F97D52',

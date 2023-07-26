@@ -6,9 +6,11 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [sepolia],
   [alchemyProvider({
-    apiKey: "t8xyaDtb1Xg-Rub8BOA-us_SGyt2pBd4"
+    apiKey: process.env.REACT_APP_PUBLIC_ALCHEMY_API_KEY || ""
   })]
 )
+
+
 
 const connector = new MetaMaskConnector({
   chains,

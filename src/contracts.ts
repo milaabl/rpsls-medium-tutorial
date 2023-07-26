@@ -5,6 +5,19 @@ export const contracts = {
         address: process.env.REACT_APP_PUBLIC_RPSLS_FACTORY_ADDRESS as Address,
         abi: [
           {
+            anonymous: false,
+            inputs: [
+              {
+                indexed: true,
+                internalType: "address",
+                name: "gameSession",
+                type: "address"
+              }
+            ],
+            name: "NewGameSession",
+            type: "event"
+          },
+          {
             inputs: [
               {
                 internalType: "bytes32",
@@ -217,9 +230,9 @@ export const contracts = {
                 type: "uint8"
               },
               {
-                internalType: "uint256",
+                internalType: "string",
                 name: "_salt",
-                type: "uint256"
+                type: "string"
               }
             ],
             name: "solve",
@@ -238,6 +251,30 @@ export const contracts = {
               }
             ],
             stateMutability: "view",
+            type: "function"
+          },
+          {
+            inputs: [
+              {
+                internalType: "enum RPSLS.Move",
+                name: "_move1",
+                type: "uint8"
+              },
+              {
+                internalType: "enum RPSLS.Move",
+                name: "_move2",
+                type: "uint8"
+              }
+            ],
+            name: "win",
+            outputs: [
+              {
+                internalType: "bool",
+                name: "",
+                type: "bool"
+              }
+            ],
+            stateMutability: "pure",
             type: "function"
           }
         ]
