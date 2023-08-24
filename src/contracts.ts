@@ -1,3 +1,6 @@
+// https://wagmi.sh/core/typescript — Const assertion is required for Typescript to process ABI safely
+// Note: JSON ABIs don't work with const assertion & thus are not supported by the type-safe Wagmi hooks (https://github.com/wagmi-dev/wagmi/discussions/1084)
+
 export const contracts = {
   factory: {
     address: process.env.REACT_APP_PUBLIC_RPSLS_FACTORY_ADDRESS,
