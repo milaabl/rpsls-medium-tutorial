@@ -1,10 +1,9 @@
-import React from "react";
-import { styled } from "@mui/material";
-import MuiCircularProgress, {
-  circularProgressClasses,
-} from "@mui/material/CircularProgress";
+import React from 'react';
 
-const Container = styled("div")`
+import { styled } from '@mui/material';
+import MuiCircularProgress from '@mui/material/CircularProgress';
+
+const Container = styled('div')`
   position: fixed;
   inset: 0px;
   display: flex;

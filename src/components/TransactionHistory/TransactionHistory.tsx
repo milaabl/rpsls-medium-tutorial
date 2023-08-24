@@ -1,11 +1,13 @@
-import React, { Dispatch, useContext, useEffect, useState } from "react";
-import * as S from "./TransactionHistory.styles";
-import { Address, useWaitForTransaction } from "wagmi";
-import { Hash, decodeAbiParameters } from "viem";
-import { useTheme } from "@mui/material";
-import successTickIcon from "assets/icons/success-tick.svg";
-import { AppContext } from "context/AppContext";
-import { useNavigate } from "react-router-dom";
+import React, { Dispatch, useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { useTheme } from '@mui/material';
+import successTickIcon from 'assets/icons/success-tick.svg';
+import { AppContext } from 'context/AppContext';
+import { Hash, decodeAbiParameters } from 'viem';
+import { Address, useWaitForTransaction } from 'wagmi';
+
+import * as S from './TransactionHistory.styles';
 
 interface TransactionHistoryProps {
   transactionHash: Hash;
@@ -30,12 +32,8 @@ function TransactionHistory({
   } = useWaitForTransaction({
     hash: transactionHash,
     enabled: !!transactionHash,
-    onSuccess: (data) => {
-      console.log(data);
-    },
     onReplaced: (replacement) => {
-      console.log({ replacement });
-      if (replacement.reason === "cancelled") {
+      if (replacement.reason === 'cancelled') {
         setErrorMessage?.(`Transaction ${transactionHash} was cancelled`);
         return;
       } else {
@@ -46,17 +44,19 @@ function TransactionHistory({
     confirmations: 1,
   });
 
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   const [gameSessionHash, setGameSessionHash] = useState<Hash>();
 
   useEffect(() => {
     if (!transactionData?.logs[0]?.data) return;
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     const _gameSessionHash = String(
       decodeAbiParameters(
         [
           {
-            type: "address",
-            name: "gameSession",
+            type: 'address',
+            name: 'gameSession',
           },
         ],
         transactionData.logs[0].topics[1] as Address,
@@ -92,7 +92,7 @@ function TransactionHistory({
         <S.CutOffBorder />
       </S.Container>
     </>
-  ) : transactionData?.status === "success" && !error ? (
+  ) : transactionData?.status === 'success' && !error ? (
     <>
       <S.Container>
         <S.Details>

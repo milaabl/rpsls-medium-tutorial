@@ -1,10 +1,10 @@
-import { Button, Chip, TextField as MuiTextField, styled } from "@mui/material";
+import { Button, Chip, TextField as MuiTextField, styled } from '@mui/material';
 
-export const Container = styled("div")`
+export const Container = styled('div')`
   padding: ${({ theme }) => theme.spacing(10, 20)};
 `;
 
-export const MovesContainer = styled("ul")`
+export const MovesContainer = styled('ul')`
   list-style-type: none;
   padding: 0;
   margin: 0;
@@ -16,7 +16,7 @@ export const MovesContainer = styled("ul")`
   flex-wrap: wrap;
 `;
 
-export const MoveItem = styled("li")`
+export const MoveItem = styled('li')`
   cursor: pointer;
   display: flex;
   width: 30%;
@@ -32,7 +32,7 @@ export const MoveItem = styled("li")`
   }
 `;
 
-export const TransactionHistoryContainer = styled("div")``;
+export const TransactionHistoryContainer = styled('div')``;
 
 export const TextField = styled(MuiTextField)`
   width: 100%;
@@ -55,7 +55,7 @@ export const TextField = styled(MuiTextField)`
   }
 `;
 
-export const Form = styled("div")`
+export const Form = styled('div')`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(2)};
@@ -94,10 +94,10 @@ export const SubmitButton = styled(Button)`
   }
 `;
 
-export const Heading = styled("h2")`
+export const Heading = styled('h2')`
   ${({ theme }) => theme.typography.h4};
 `;
 
-export const Input = styled("div")`
+export const Input = styled('div')`
   position: relative;
 `;

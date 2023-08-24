@@ -1,4 +1,4 @@
-import React, { Dispatch, createContext, useState } from "react";
+import React, { Dispatch, createContext, useState } from 'react';
 
 interface AppContextState {
   isLoading: boolean;

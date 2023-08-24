@@ -1,12 +1,12 @@
-import React, { useEffect, useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from 'react';
 
 export const useLocalStorage = (
   key: string,
 ): [string | null, (value: string, key?: string) => void] => {
   const subscribe = (listener: () => void) => {
-    window.addEventListener("storage", listener);
+    window.addEventListener('storage', listener);
     return () => {
-      window.removeEventListener("storage", listener);
+      window.removeEventListener('storage', listener);
     };
   };
 

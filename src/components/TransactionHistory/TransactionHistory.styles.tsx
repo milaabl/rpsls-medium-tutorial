@@ -1,12 +1,12 @@
-import { CircularProgress, styled } from "@mui/material";
+import { CircularProgress, styled } from '@mui/material';
 
-export const Container = styled("div")`
+export const Container = styled('div')`
   width: 100%;
   padding: ${({ theme }) => theme.spacing(0, 2)};
   margin-bottom: ${({ theme }) => theme.spacing(2.5)};
   margin-top: ${({ theme }) => theme.spacing(3)};
   ${({ theme }) =>
-    `${theme.breakpoints.up("md")} {
+    `${theme.breakpoints.up('md')} {
         margin-top: ${theme.spacing(6)};
         width: 75%;
         margin-right: auto;
@@ -21,7 +21,7 @@ export const LoadingIconComponent = styled(CircularProgress)`
   margin: auto;
 `;
 
-export const Details = styled("div")`
+export const Details = styled('div')`
   border-radius: ${({ theme }) => theme.spacing(1)}
     ${({ theme }) => theme.spacing(1)} 0 0;
   background-color: ${({ theme }) => theme.palette.common.white};
@@ -30,13 +30,13 @@ export const Details = styled("div")`
   position: relative;
   flex-direction: column;
   ${({ theme }) =>
-    `${theme.breakpoints.up("md")} {
+    `${theme.breakpoints.up('md')} {
         padding: ${theme.spacing(2.5)};
   }
     `}
 `;
 
-export const DetailsItem = styled("div")`
+export const DetailsItem = styled('div')`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: pre;
@@ -47,7 +47,7 @@ export const DetailsItem = styled("div")`
   }
 `;
 
-export const Heading = styled("h2")`
+export const Heading = styled('h2')`
   ${({ theme }) => theme.typography.h5};
   font-weight: 600;
   padding: ${({ theme }) => theme.spacing(2)} 0;
@@ -55,7 +55,7 @@ export const Heading = styled("h2")`
   margin-bottom: ${({ theme }) => theme.spacing(2)};
   position: relative;
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     bottom: 0;
     width: calc(100% + ${({ theme }) => theme.spacing(4)});
@@ -64,13 +64,13 @@ export const Heading = styled("h2")`
     right: 0;
     left: -${({ theme }) => theme.spacing(2)};
     ${({ theme }) =>
-      `${theme.breakpoints.up("md")} {
+      `${theme.breakpoints.up('md')} {
             left: -${theme.spacing(2.5)};
             width: calc(100% + ${theme.spacing(5)});
     }`}
   }
   ${({ theme }) =>
-    `${theme.breakpoints.up("md")} {
+    `${theme.breakpoints.up('md')} {
         ${theme.typography.h2};
         padding: 0;
         padding-bottom: ${theme.spacing(2.5)};
@@ -79,7 +79,7 @@ export const Heading = styled("h2")`
     `}
 `;
 
-export const CutOffBorder = styled("div")`
+export const CutOffBorder = styled('div')`
   --mask: conic-gradient(
       from -45deg at bottom,
       #0000,
@@ -93,7 +93,7 @@ export const CutOffBorder = styled("div")`
   height: ${({ theme }) => theme.spacing(5)};
   border-top: 2px solid ${({ theme }) => theme.palette.action.selected};
   ${({ theme }) =>
-    `${theme.breakpoints.up("md")} {
+    `${theme.breakpoints.up('md')} {
         height: ${theme.spacing(7.5)};
         --mask: conic-gradient(from -45deg at bottom,#0000,#000 1deg 90deg,#0000 91deg) 50% / ${theme.spacing(
           7.5,
@@ -102,7 +102,7 @@ export const CutOffBorder = styled("div")`
     `}
 `;
 
-export const SuccessIndicator = styled("img")`
+export const SuccessIndicator = styled('img')`
   border-radius: 100%;
   display: block;
   margin: auto;
@@ -116,11 +116,11 @@ export const SuccessIndicator = styled("img")`
   right: 0;
 `;
 
-export const GameButtonsContainer = styled("div")`
+export const GameButtonsContainer = styled('div')`
   margin: auto;
   display: flex;
   flex-direction: column;
-  ${({ theme }) => theme.breakpoints.up("md")} {
+  ${({ theme }) => theme.breakpoints.up('md')} {
     flex-direction: row;
     justify-content: space-between;
     gap: ${({ theme }) => theme.spacing(2)};
@@ -128,7 +128,7 @@ export const GameButtonsContainer = styled("div")`
   }
 `;
 
-export const InviteOpponentButton = styled("button")`
+export const InviteOpponentButton = styled('button')`
   width: 100%;
   border-radius: ${({ theme }) => theme.spacing(1)};
   background-color: ${({ theme }) => theme.palette.common.white};
@@ -139,7 +139,7 @@ export const InviteOpponentButton = styled("button")`
   font-weight: 600;
 `;
 
-export const GoToSolveGameButton = styled("button")`
+export const GoToSolveGameButton = styled('button')`
   border-radius: ${({ theme }) => theme.spacing(1)};
   width: 100%;
   background-color: ${({ theme }) => theme.palette.common.white};

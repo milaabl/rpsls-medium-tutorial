@@ -1,6 +1,6 @@
-import { styled } from "@mui/material";
+import { styled } from '@mui/material';
 
-export const Container = styled("div")`
+export const Container = styled('div')`
   width: 100%;
   padding: ${({ theme }) => theme.spacing(2, 6)};
   border: 1px solid ${({ theme }) => theme.palette.lavender?.main};
@@ -10,11 +10,11 @@ export const Container = styled("div")`
   align-items: center;
 `;
 
-export const WarningLabel = styled("span")`
+export const WarningLabel = styled('span')`
   font-weight: 600;
 `;
 
-export const SwitchButton = styled("button")`
+export const SwitchButton = styled('button')`
   cursor: pointer;
   font-size: ${({ theme }) => theme.typography.subtitle1};
   border-radius: ${({ theme }) => theme.spacing(1)};

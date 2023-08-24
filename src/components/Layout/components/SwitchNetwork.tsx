@@ -1,6 +1,8 @@
-import React from "react";
-import { useSwitchNetwork, useNetwork, Chain } from "wagmi";
-import * as S from "./SwitchNetwork.styles";
+import React from 'react';
+
+import { Chain, useNetwork, useSwitchNetwork } from 'wagmi';
+
+import * as S from './SwitchNetwork.styles';
 
 function SwitchNetwork() {
   const { switchNetwork, chains } = useSwitchNetwork();

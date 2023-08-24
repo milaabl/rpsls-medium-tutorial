@@ -1,8 +1,8 @@
-import rockIcon from "assets/icons/moves/rock.jpg";
-import paperIcon from "assets/icons/moves/paper.jpg";
-import scissorsIcon from "assets/icons/moves/scissors.jpg";
-import lizardIcon from "assets/icons/moves/lizard.jpg";
-import spockIcon from "assets/icons/moves/spock.jpg";
+import lizardIcon from 'assets/icons/moves/lizard.jpg';
+import paperIcon from 'assets/icons/moves/paper.jpg';
+import rockIcon from 'assets/icons/moves/rock.jpg';
+import scissorsIcon from 'assets/icons/moves/scissors.jpg';
+import spockIcon from 'assets/icons/moves/spock.jpg';
 
 export enum Move {
   Null,

@@ -21,20 +21,14 @@
                 "evm.methodIdentifiers",
                 "metadata"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "^0.8.12"
-      ],
-      "artifacts": [
-        "RPSLS"
-      ]
+      "versionPragmas": ["^0.8.12"],
+      "artifacts": ["RPSLS"]
     },
     "C:\\Users\\milaa\\Desktop\\Documents\\Работа Сонечка\\medium\\rpsls-game2\\contracts\\RPSLSFactory.sol": {
       "lastModificationDate": 1690108400048,
@@ -56,22 +50,14 @@
                 "evm.methodIdentifiers",
                 "metadata"
               ],
-              "": [
-                "ast"
-              ]
+              "": ["ast"]
             }
           }
         }
       },
-      "imports": [
-        "./RPSLS.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.12"
-      ],
-      "artifacts": [
-        "RPSLSFactory"
-      ]
+      "imports": ["./RPSLS.sol"],
+      "versionPragmas": ["^0.8.12"],
+      "artifacts": ["RPSLSFactory"]
     }
   }
 }

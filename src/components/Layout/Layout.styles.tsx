@@ -1,6 +1,6 @@
-import { styled } from "@mui/material";
+import { styled } from '@mui/material';
 
-export const ErrorLabel = styled("div")`
+export const ErrorLabel = styled('div')`
   ${({ theme }) => theme.typography.subtitle1};
   z-index: 100;
   font-weight: bold;

@@ -1,11 +1,11 @@
-import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
-import { Typography, styled } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton/LoadingButton';
+import { Typography, styled } from '@mui/material';
 
-export const Container = styled("div")`
+export const Container = styled('div')`
   margin: ${({ theme }) => theme.spacing(2)};
 `;
 
-export const GameSolvedContainer = styled("div")`
+export const GameSolvedContainer = styled('div')`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(4)};
@@ -18,7 +18,7 @@ export const GameSolvedTitle = styled(Typography)`
   display: inline-block;
   position: relative;
   &:before {
-    content: " ";
+    content: ' ';
     display: block;
     height: 90%;
     width: 100%;
@@ -34,11 +34,11 @@ export const GameSolvedTitle = styled(Typography)`
   }
 `;
 
-export const HighlightContainer = styled("span")`
+export const HighlightContainer = styled('span')`
   position: relative;
 `;
 
-export const PlayerContainer = styled("ul")`
+export const PlayerContainer = styled('ul')`
   display: grid;
   grid-template-columns: 1fr 1fr;
   list-style-type: none;
@@ -67,7 +67,7 @@ export const SolveButton = styled(LoadingButton)`
   }
 `;
 
-export const MovesContainer = styled("ul")`
+export const MovesContainer = styled('ul')`
   margin: 0 auto ${({ theme }) => theme.spacing(5)};
   list-style-type: none;
   padding: 0;
@@ -78,7 +78,7 @@ export const MovesContainer = styled("ul")`
   flex-wrap: wrap;
 `;
 
-export const MoveItem = styled("li")`
+export const MoveItem = styled('li')`
   cursor: pointer;
   display: flex;
   width: 30%;
@@ -113,7 +113,7 @@ export const SubmitMoveButton = styled(LoadingButton)`
   }
 `;
 
-export const SuccessBox = styled("div")`
+export const SuccessBox = styled('div')`
   margin-top: ${({ theme }) => theme.spacing(2)};
   border: 1px solid ${({ theme }) => theme.palette.green?.light};
   background-color: ${({ theme }) => theme.palette.green?.lightest};
@@ -143,7 +143,7 @@ export const TimeoutButton = styled(LoadingButton)`
   }
 `;
 
-export const DetailsItem = styled("li")`
+export const DetailsItem = styled('li')`
   display: flex;
   flex-direction: column;
   & strong {
@@ -151,13 +151,13 @@ export const DetailsItem = styled("li")`
   }
 `;
 
-export const HiddenMoveImage = styled("img")`
+export const HiddenMoveImage = styled('img')`
   filter: blur(10px);
   border-radius: 100%;
   width: 50%;
 `;
 
-export const MoveImage = styled("img")`
+export const MoveImage = styled('img')`
   border-radius: 100%;
   width: 50%;
 `;

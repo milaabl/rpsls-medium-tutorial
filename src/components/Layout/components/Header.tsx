@@ -1,11 +1,13 @@
-import React from "react";
-import { useAccount, useConnect, useDisconnect } from "wagmi";
-import CancelIcon from "@mui/icons-material/Cancel";
-import * as S from "./Header.styles";
-import logoIcon from "assets/icons/logo.svg";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import SwitchNetwork from "./SwitchNetwork";
-import { IconButton } from "@mui/material";
+import React from 'react';
+
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { IconButton } from '@mui/material';
+import logoIcon from 'assets/icons/logo.svg';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
+
+import * as S from './Header.styles';
+import SwitchNetwork from './SwitchNetwork';
 
 function Header() {
   const { isLoading: isConnectingWallet, connectors, connect } = useConnect();

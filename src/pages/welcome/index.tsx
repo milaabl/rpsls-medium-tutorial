@@ -1,54 +1,39 @@
-import { AppContext } from "context/AppContext";
-import * as S from "./styles";
-import { contracts } from "contracts";
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Abi, Hash, MulticallResult } from "viem";
-import { useWalletClient, useContractRead, useContractReads } from "wagmi";
+import React, { FC, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function WelcomePage() {
+import { Hash } from 'viem';
+import { useContractRead, useContractReads, useWalletClient } from 'wagmi';
+
+import { AppContext } from '../../context/AppContext';
+import { contracts } from '../../contracts';
+import * as S from './styles';
+
+const WelcomePage: FC = () => {
   const { data: walletClient } = useWalletClient();
   const { isLoading, data: availableGameSessions } = useContractRead({
     ...contracts.factory,
-    functionName: "getGameSessions",
+    functionName: 'getGameSessions',
     account: walletClient?.account,
     watch: true,
-    select: (data: any) => {
-      return data as Array<Hash>;
-    },
   });
-
-  const [activeGameSessions, setActiveSessions] = useState<Array<Hash>>([]);
-
-  const { isLoading: isGameStakesLoading } = useContractReads({
-    contracts: (availableGameSessions as Array<Hash>)?.map(
-      (gameSession: Hash) => {
+  const { data: activeGameSessions, isLoading: isGameStakesLoading } =
+    useContractReads({
+      contracts: availableGameSessions?.map((gameSession: Hash) => {
         return {
           address: gameSession,
-          functionName: "stake",
-          abi: contracts.rpslsGame.abi as Abi,
+          functionName: 'stake',
+          abi: contracts.rpslsGame.abi,
         };
+      }),
+      select: (data) => {
+        if (!availableGameSessions) return [];
+
+        return data
+          .filter((session) => Number(session.result) > 0)
+          .map((_, index) => availableGameSessions[index]);
       },
-    ),
-    onSuccess: (data) => {
-      const contractStakes = (
-        data as unknown as Array<MulticallResult<bigint>>
-      ).map((result: MulticallResult<bigint>) => result.result);
-      contractStakes.forEach(
-        (contractStake: bigint | undefined, index: number) => {
-          if (
-            Number(contractStake as unknown as bigint) > 0 &&
-            availableGameSessions?.[index]
-          ) {
-            setActiveSessions((prev: Array<Hash>) =>
-              Array.from(new Set([...prev, availableGameSessions[index]])),
-            );
-          }
-        },
-      );
-    },
-    watch: true,
-  });
+      watch: true,
+    });
 
   const navigate = useNavigate();
 
@@ -58,16 +43,15 @@ function WelcomePage() {
     setIsLoading?.(isLoading || isGameStakesLoading);
   }, [isLoading, isGameStakesLoading]);
 
-  return activeGameSessions &&
-    (activeGameSessions as Array<Hash>)?.length >= 1 ? (
+  return activeGameSessions && activeGameSessions?.length >= 1 ? (
     <S.Container>
-      {(activeGameSessions as Array<Hash>).map((hash: Hash) => (
+      {activeGameSessions.map((hash: Hash) => (
         <S.LinkToSession onClick={() => navigate(`/game-session/${hash}`)}>
           <span>{hash}</span>
           <S.ArrowRightButton />
         </S.LinkToSession>
       ))}
-      <S.NewGameSessionLink onClick={() => navigate("/new-game")}>
+      <S.NewGameSessionLink onClick={() => navigate('/new-game')}>
         Propose new game session
       </S.NewGameSessionLink>
     </S.Container>
@@ -77,11 +61,11 @@ function WelcomePage() {
         There're no available active game sessions for you yet. Propose a new
         game session or get invited to join one!
       </S.NoAvailableGameSessionsLabel>
-      <S.NewGameSessionLink onClick={() => navigate("/new-game")}>
+      <S.NewGameSessionLink onClick={() => navigate('/new-game')}>
         Propose new game session
       </S.NewGameSessionLink>
     </S.NoAvailableGameSessions>
   );
-}
+};
 
 export default WelcomePage;
