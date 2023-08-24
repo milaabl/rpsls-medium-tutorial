@@ -10,7 +10,7 @@ import { router } from './router';
 import { theme } from './theme';
 import { wagmiConfig } from './wagmiConfig';
 
-const GlobalStylesContainer = createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
   body * {
     box-sizing: border-box;
   }
@@ -28,13 +28,12 @@ const GlobalStylesContainer = createGlobalStyle`
 function App() {
   return (
     <WagmiConfig config={wagmiConfig}>
-      <GlobalStylesContainer>
+      <GlobalStyles />
         <ThemeProvider theme={theme}>
           <AppContextProvider>
             <RouterProvider router={router} />
           </AppContextProvider>
         </ThemeProvider>
-      </GlobalStylesContainer>
     </WagmiConfig>
   );
 }
