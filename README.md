@@ -12,7 +12,7 @@
     <td><img src="https://github.com/milaabl/rpsls-medium-tutorial/assets/86361434/775c7147-6bf8-4480-bfb5-ce198f0b7350" /></td>
   </tr>
   <tr>
-    <td><img src="https://github.com/milaabl/rpsls-medium-tutorial/assets/86361434/47fc4045-f736-417a-887c-4e387e77436d)" /></td>
+    <td><img src="https://github.com/milaabl/rpsls-medium-tutorial/assets/86361434/47fc4045-f736-417a-887c-4e387e77436d" /></td>
     <td><img src="https://github.com/milaabl/rpsls-medium-tutorial/assets/86361434/05157831-4e7b-4e08-b268-f41c52c95099" /></td>
   </tr>
 </table>
